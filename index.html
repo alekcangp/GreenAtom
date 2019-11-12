@@ -1,0 +1,143 @@
+﻿<html>
+<head>
+    <meta charset="utf-8">
+
+    <meta content='user-scalable=no, initial-scale=1, width=device-width' id='viewport' name='viewport'>
+    <!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://cdn.jsdelivr.net/npm/yandex-metrica-watch/tag.js", "ym");
+
+   ym(55957516, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/55957516" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.6/vue.min.js"></script>
+    <script src = "./web3.min.js"></script>
+    <script src = "https://code.jquery.com/jquery-1.7.1.min.js" ></script>
+   
+
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href = "./style.css" rel="stylesheet">
+
+
+    <script>
+      var viewPortScale = 1 / window.devicePixelRatio;
+      $('#viewport').attr('content', 'user-scalable=yes, initial-scale='+viewPortScale+', width=device-width');
+    </script>
+
+</head>
+<body>
+
+
+
+<div class = "foot" style = "top:0; height: 130px;">
+  <h2>Г Р И Н А Т О М</h2>
+  <h1>&laquo; ELECTRICITY METERS &raquo;</h1>
+</div>
+
+<div id = "vmx" v-cloak>
+
+<div class="tabcontent">
+  <div>
+      <div class = "point but" onclick="swtab(1)" style = "width:400px;">МЕТРИКА</div>
+      <br>
+      <div class = "point but" onclick="swtab(2)" style = "width:400px;">ПЛАТЕЖИ</div>
+      <br>
+      <div class = "point but" onclick="swtab(3)" style = "width:400px;">БАЛАНС</div>
+  </div>
+</div>
+
+
+<!--1-->
+<div class="tabcontent">
+    <div style = "margin:auto; font-size:18px">
+      
+      <b>РАССЧЁТ СТОИМОСТИ ЭЛЕКТРОЭНЕРГИИ</b>
+      <br><br><br>
+      Введите идентификатор клиента:<br><br>
+      <textarea placeholder="Блокчейн адрес" v-model = "addr" style = "width: 800px;"></textarea>
+      <br><br><br>
+      Введите тариф (руб./кВт*ч):<br><br>
+      <textarea placeholder="Целое число" v-model = "tarif" style = "width: 200px;"></textarea>
+      <br><br><br>
+      Стоимость: {{met}} кВт х {{tarif}} руб./кВт*ч  = <b>{{met*tarif}}</b> руб.      
+      <br><br><br>
+      <div id = 'txid' style = 'font-size:15px'></div>
+      <br><br><br>
+          <center>
+          <div class = "point but" onclick="meter()" >ПОКАЗАНИЯ СЧЁТЧИКА</div>
+          <br><br>
+          <div class = "point but" onclick="swtab(0)" >НАЗАД</div>
+          </center>
+         
+      </div>
+  </div>
+
+<!--2-->
+<div class="tabcontent">
+  <div style = "margin:auto; font-size:18px">
+    
+    <b>ПЛАТЕЖИ КЛИЕНТОВ</b>
+    <br><br><br>
+    Введите идентификатор клиента:<br><br>
+    <textarea placeholder="Блокчейн адрес" v-model = "addr" style = "width: 800px;"></textarea>
+    
+    <br><br><br>
+    Поступивший платёж: {{payment}} руб.      
+    <br><br><br>
+    <div id = 'txid2' style = 'font-size:15px'></div>
+    <br><br><br>
+        <center>
+        <div class = "point but" onclick="pay()" >ПРОВЕРИТЬ ПЛАТЁЖ</div>
+        <br><br>
+        <div class = "point but" onclick="swtab(0)" >НАЗАД</div>
+        </center>
+       
+    </div>
+</div>
+
+
+<!--3-->
+<div class="tabcontent">
+  <div style = "margin:auto; font-size:18px">
+    
+    <b>БАЛАНС СЧЁТА КЛИЕНТА</b>
+    <br><br><br>
+    Введите идентификатор клиента:<br><br>
+    <textarea placeholder="Блокчейн адрес" v-model = "addr" style = "width: 800px;"></textarea>
+    
+    <br><br><br>
+    Кредит: {{credit}} руб. <span v-html = 'linkcre'></span>
+    <br><br>  
+    Дебит: {{debit}} руб. <span v-html = 'linkdeb'></span>
+    <br><br>  
+    Задолженность: {{credit - debit}} руб.    
+    <br><br><br>
+    <div id = 'txid2' style = 'font-size:15px'></div>
+    <br><br><br>
+        <center>
+        <div class = "point but" onclick="swtab(0)" >НАЗАД</div>
+        </center>
+       
+    </div>
+</div>
+
+
+</div>
+
+<div class = "foot" style = "bottom: 0;height: 50;">
+  <p>Powered by Web3JS & ChainLink Network</p>
+</div>
+
+<script src = "./script.js"></script>
+</body>
+</html>

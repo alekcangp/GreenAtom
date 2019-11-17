@@ -40,19 +40,28 @@
 
 
 <div class = "foot" style = "top:0; height: 130px;">
+    <canvas id="scene" style = "position:absolute; top:0px; left:-45px;" ></canvas>
+    <input style = "display:none" id="copy" type="text" value=" ELECTRICITY METERS " />
+    <br><br><br><br>
   <h2>Г Р И Н А Т О М</h2>
-  <h1>&laquo; ELECTRICITY METERS &raquo;</h1>
+  
 </div>
 
 <div id = "vmx" v-cloak>
 
 <div class="tabcontent">
   <div>
+  Идентификатор клиента: <br><br>{{addr}}
+  <br><br><br><br>
+  <center>
       <div class = "point but" onclick="swtab(1)" style = "width:400px;">МЕТРИКА</div>
       <br>
       <div class = "point but" onclick="swtab(2)" style = "width:400px;">ПЛАТЕЖИ</div>
       <br>
       <div class = "point but" onclick="swtab(3)" style = "width:400px;">БАЛАНС</div>
+      <br>
+      <div class = "point but" onclick="logout()" style = "width:400px;">ВЫЙТИ</div>
+  <center>
   </div>
 </div>
 
@@ -63,8 +72,8 @@
       
       <b>РАССЧЁТ СТОИМОСТИ ЭЛЕКТРОЭНЕРГИИ</b>
       <br><br><br>
-      Введите идентификатор клиента:<br><br>
-      <textarea placeholder="Блокчейн адрес" v-model = "addr" style = "width: 800px;"></textarea>
+      Идентификатор клиента:<br><br>
+      <textarea readonly placeholder="Блокчейн адрес" v-model = "addr" style = "width: 800px;"></textarea>
       <br><br><br>
       Введите тариф (руб./кВт*ч):<br><br>
       <textarea placeholder="Целое число" v-model = "tarif" style = "width: 200px;"></textarea>
@@ -88,8 +97,8 @@
     
     <b>ПЛАТЕЖИ КЛИЕНТОВ</b>
     <br><br><br>
-    Введите идентификатор клиента:<br><br>
-    <textarea placeholder="Блокчейн адрес" v-model = "addr" style = "width: 800px;"></textarea>
+    Идентификатор клиента:<br><br>
+    <textarea  readonly placeholder="Блокчейн адрес" v-model = "addr" style = "width: 800px;"></textarea>
     
     <br><br><br>
     Поступивший платёж: {{payment}} руб.      
@@ -112,8 +121,8 @@
     
     <b>БАЛАНС СЧЁТА КЛИЕНТА</b>
     <br><br><br>
-    Введите идентификатор клиента:<br><br>
-    <textarea placeholder="Блокчейн адрес" v-model = "addr" style = "width: 800px;"></textarea>
+    Идентификатор клиента:<br><br>
+    <textarea  readonly placeholder="Блокчейн адрес" v-model = "addr" style = "width: 800px;"></textarea>
     
     <br><br><br>
     Кредит: {{credit}} руб. <span v-html = 'linkcre'></span>
@@ -131,6 +140,71 @@
     </div>
 </div>
 
+<!--4-->
+<div class="tabcontent">
+  <div>
+      <div class = "point but" onclick="crewal()" style = "width:400px;">РЕГИСТРАЦИЯ</div>
+      <br>
+      <div class = "point but" onclick="swtab(5)" style = "width:400px;">ВОЙТИ</div>
+     
+  </div>
+</div>
+
+<!--5-->
+<div class="tabcontent">
+  <div style = "margin:auto">
+    Введите приватный ключ:<br><br>
+    <textarea placeholder="" v-model = "privx" style = "width: 800px;"></textarea>
+  <br><br><br>
+  <center>
+  <div class = "point but" onclick="logwal()" >ПОДТВЕРДИТЬ</div>
+  <br>
+  <div class = "point but" onclick="swtab(4)" >НАЗАД</div>
+  </center>
+  </div>
+</div>
+
+
+<!--6-->
+<div class="tabcontent">
+  <div style = "margin:auto; font-size:18px">
+    
+      <b>ПРОФИЛЬ</b>
+    <br><br><br>
+        Идентификатор клиента: 
+        <br><br>
+        <b>{{addr}}</b>
+        <br><br><br>
+        Приватный ключ (секретный): 
+        <br><br>
+        <b>{{privx}}</b>
+    
+    
+        <!--
+           Зашифрованный ключ (секретный):
+        <br><br>
+         {{enpriv}}
+        <br><br>
+        Пароль: 
+        <br><br>
+        {{pass}}
+        <br><br>
+        -->
+        <br><br><br><br>
+        
+        
+        Сохраните эти данные в безопасном месте.<br> Никому не сообщайте ваш приватный ключ.
+        
+        <br><br><br>
+
+           
+        <center>
+        <div class = "point but" onclick="swtab(4)" >ПОНЯТНО</div>
+        
+        </center>
+       
+    </div>
+</div>
 
 </div>
 
@@ -139,5 +213,6 @@
 </div>
 
 <script src = "./script.js"></script>
+<script src = "./scene.js"></script>
 </body>
 </html>

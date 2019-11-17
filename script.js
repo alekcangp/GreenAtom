@@ -5,11 +5,12 @@ var vm = new Vue({
     el: '#vmx',
     data: {
      // pass:'', 
-      addr:'0x6dbAA3daD7F3F57E2f8b9ebA8eF7a29220dDB8ba',
+      addr:'',
       tarif:10,
       met:0,
       txid:' ',
-      priv:'0xxxxxxxxxxxxxxxxxxxxxxxx',
+      priv:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', //0x6dbAA3daD7F3F57E2f8b9ebA8eF7a29220dDB8ba
+      privx:'',
       payment:0,
       credit:0,
       debit:0,
@@ -23,7 +24,7 @@ var vm = new Vue({
 
 //tabs
 var tabcontent = document.getElementsByClassName("tabcontent");
-swtab(0);
+swtab(4);
 function swtab(n) {
 
   for (var i = 0; i < tabcontent.length; i++) {
@@ -33,7 +34,7 @@ function swtab(n) {
 }
 
 
-var web3 = new Web3('https://rinkeby.infura.io/v3/xxxxxxxxxxxxxxxxxxxxxx');
+var web3 = new Web3('https://rinkeby.infura.io/v3/xxxxxxxxxxxxxxxxxxxxxxxxxx');
 
 var ABI = [
   // balanceOf
@@ -52,10 +53,44 @@ var codebi = new web3.eth.Contract(ABI, debi);
 
 
 updresp(1);  
-setInterval(updresp,15000,0);
+setInterval(updresp,5000,0);
+
+function crewal() {
+  // if (vm.pass == '') alert('Введите пароль!')
+     
+         var wal = web3.eth.accounts.create(web3.utils.randomHex(32));
+         vm.addr = wal.address;
+         vm.privx = wal.privateKey;
+         //vm.enpriv = web3.eth.accounts.encrypt(vm.priv, vm.pass);
+ 
+   swtab(6)
+ }
+
+ async function logwal() {
+  try {vm.addr =  web3.eth.accounts.privateKeyToAccount(vm.privx).address;}
+  catch(e){alert('Неверный приватный ключ!');return}
+
+  //updbal();
+  //setInterval(updbal,30000);
+  swtab(0) ; 
+  
+}
+
+function logout() {
+  vm.privx = '';
+  swtab(4);
+}
+
+async function check() {
+	var ch = await web3.utils.isAddress(vm.addr);
+	if (!ch) alert('Неверный идентификатор клиента!');
+	return ch;
+}
 
 async function meter() {
   vm.met = 0;
+	if (vm.tarif > 10) {alert('Нереальный тариф (допустимо от 0 до 10)'); return}
+	if (!await check(vm.addr)) return;
   try {
   var str = "00000000000000000000000000000000";
   var tar = web3.utils.toHex(vm.tarif).substr(2);
@@ -84,6 +119,8 @@ async function meter() {
 
 async function pay() {
   vm.payment = 0;
+  if (!await check(vm.addr)) return;
+  
   try {
   
   var rawTransaction ={
@@ -108,7 +145,7 @@ async function pay() {
 }
 
 var tem, tem2;
-async function updresp(t) {
+ async function updresp(t) {
 
 web3.eth.getStorageAt("0x38011EA2a9B77179D764792322487A5e41008639",8).then(function(resp){
 var temp = web3.utils.hexToNumberString(resp);
@@ -123,23 +160,19 @@ web3.eth.getStorageAt("0xf9Ea7D1A14541511A1803754fb71B5F09957a63c",8).then(funct
   if (temp2 != tem2) {vm.payment = temp2; tem2 = temp2; alert('Сумма платёжа клиента: '+temp2+' руб.')}
   
   })
-
- vm.credit = Math.round(await cocred.methods.balanceOf(vm.addr).call()*1e-18);
-  vm.debit = Math.round(await codebi.methods.balanceOf(vm.addr).call()*1e-19);
+try{
+ vm.credit = Math.round( await cocred.methods.balanceOf(vm.addr).call()*1e-18);
+}catch(e){vm.credit = 'n/a'}
+try{
+ vm.debit = Math.round( await codebi.methods.balanceOf(vm.addr).call()*1e-19);
+}catch(e){vm.debit = 'n/a'}
 
 vm.linkcre = "<a href='https://rinkeby.etherscan.io/token/0x3716bae97c0f67374d2c9931f152138578d1fccf?a="+vm.addr+"' target = '_blank'> (etherscan)</a>";
 vm.linkdeb = "<a href='https://rinkeby.etherscan.io/token/0x08994ca1901359705C62969bfd5b09Ea24232e3B?a="+vm.addr+"' target = '_blank'> (etherscan)</a>";
 
-}
+
     
 
-async function updbal() {
-  try {
-  if (vm.addr == '') return;
- // vm.bal = Math.round(await web3.eth.getBalance(vm.addr)*1e-10)*1e-8; 
- // vm.tok = Math.round(await contract.methods.balanceOf(vm.addr).call()*1e-10)*1e-8;
-  
-  }catch(e){alert(e)}
   
 
 }
